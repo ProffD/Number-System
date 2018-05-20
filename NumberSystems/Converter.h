@@ -205,7 +205,10 @@ namespace NumberSystems {
 #pragma endregion
 	private: System::Void btnConvert_Click(System::Object^  sender, System::EventArgs^  e) {
 
-		// Decimal to Binary
+
+//===========================================Decimal to Binary==================================
+
+		
 		if (this->cmbFrom->Text == "Dec" && this->cmbTo->Text == "Bin")
 		{
 			try
@@ -258,7 +261,12 @@ namespace NumberSystems {
 				MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 			}
+			catch (OverflowException ^ o)
+			{
+				this->txtOutput->Clear();
+				MessageBox::Show("Decimal Number Provided is too big \nTry again with a valid decimal number not more 255!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
+			}
 			
 	 }
 				
@@ -316,11 +324,17 @@ namespace NumberSystems {
 				MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 			}
+			catch (OverflowException ^ o)
+			{
+				this->txtOutput->Clear();
+				MessageBox::Show("Decimal Number Provided is too big \nTry again with a valid decimal number not more 255!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+			}
 
 
 		}
 
-		//===========================================Decimal to Decimal==================================
+//===========================================Decimal to Decimal==================================
 
 		if (this->cmbFrom->Text == "Dec" && this->cmbTo->Text == "Dec")
 		{
@@ -373,12 +387,92 @@ namespace NumberSystems {
 				MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 			}
+			catch (OverflowException ^ o)
+			{
+				this->txtOutput->Clear();
+				MessageBox::Show("Decimal Number Provided is too big \nTry again with a valid decimal number not more 255!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+			}
+
+
+
+		}
+
+//===========================================Binary to Decimal==================================
+
+		if (this->cmbFrom->Text == "Bin" && this->cmbTo->Text == "Dec")
+		{
+			try
+			{    
+				
+				int valid = Int32::Parse(this->txtInput->Text);
+				if (valid >= 0) {
+
+					if (Regex::Match(txtInput->Text, "^[0-1]{1,8}$")->Success)
+					{
+											
+							
+							
+							this->txtOutput->Text = Convert::ToInt32(txtInput->Text, 2).ToString();
+					     	
+
+					}
+					else
+					{
+
+						try
+						{
+							int dec = Convert::ToInt32(txtInput->Text, 2);
+							if (dec > 255)
+							{
+								this->txtOutput->Clear();
+								MessageBox::Show("A maximum binary number you can convert is up 8 bits!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
+							}
+							else
+							{
+								this->txtOutput->Clear();
+								MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+							}
+
+						}
+						catch (FormatException ^e)
+						{
+							this->txtOutput->Clear();
+							MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+						}
+
+
+					}
+
+
+				}
+				else
+				{
+					MessageBox::Show("Please enter positive binary number!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+				}
+			}
+			catch (FormatException ^ e )
+			{
+				this->txtOutput->Clear();
+				MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+			}
+			catch (OverflowException ^ o)
+			{
+				this->txtOutput->Clear();
+				MessageBox::Show("Binary Number Provided is too big \nTry again with a valid binary number not more 8bits!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+			}
 
 
 		}
 
 
-	
+
+
 
 	}
 
