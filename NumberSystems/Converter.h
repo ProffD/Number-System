@@ -540,6 +540,76 @@ namespace NumberSystems {
 
 
 		}
+
+		//===========================================Binary to Binary==================================
+
+		if (this->cmbFrom->Text == "Bin" && this->cmbTo->Text == "Bin")
+		{
+			try
+			{
+
+				int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
+				if (valid >= 0) {
+
+					if (Regex::Match(txtInput->Text->TrimStart('0'), "^[0-1]{1,8}$")->Success)
+					{
+
+						this->txtOutput->Text = this->txtInput->Text->TrimStart('0');
+
+
+					}
+					else
+					{
+
+						try
+						{
+							int dec = Convert::ToInt32(txtInput->Text, 2);
+							if (dec > 255)
+							{
+								this->txtOutput->Clear();
+								MessageBox::Show("A maximum binary number you can convert is up 8 bits!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
+							}
+							else
+							{
+								this->txtOutput->Clear();
+								MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+							}
+
+						}
+						catch (FormatException ^e)
+						{
+							this->txtOutput->Clear();
+							MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+						}
+
+
+					}
+
+
+				}
+				else
+				{
+					MessageBox::Show("Please enter positive binary number!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+				}
+			}
+			catch (FormatException ^ e)
+			{
+				this->txtOutput->Clear();
+				MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+			}
+			catch (OverflowException ^ o)
+			{
+				this->txtOutput->Clear();
+				MessageBox::Show("Binary Number Provided is too big \nTry again with a valid binary number not more 8bits!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+			}
+
+
+		}
 	}
 
 };
