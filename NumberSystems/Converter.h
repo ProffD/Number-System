@@ -213,10 +213,10 @@ namespace NumberSystems {
 		{
 			try
 			{
-				int valid = Int32::Parse(this->txtInput->Text);
+				int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
 				if (valid >= 0) {
 
-					if (Regex::Match(txtInput->Text, "^([0-9]|[1][0-9]|[2-9][0-9]|[1][0-9][0-9]|2[0-4][0-9]|25[0-5])$")->Success)
+					if (Regex::Match(txtInput->Text->TrimStart('0'), "^([0-9]|[1][0-9]|[2-9][0-9]|[1][0-9][0-9]|2[0-4][0-9]|25[0-5])$")->Success)
 					{
 
 						int dec = Int32::Parse(this->txtInput->Text);
@@ -276,10 +276,10 @@ namespace NumberSystems {
 		{
 			try
 			{
-				int valid = Int32::Parse(this->txtInput->Text);
+				int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
 				if (valid >= 0) {
 
-					if (Regex::Match(txtInput->Text, "^([0-9]|[1][0-9]|[2-9][0-9]|[1][0-9][0-9]|2[0-4][0-9]|25[0-5])$")->Success)
+					if (Regex::Match(txtInput->Text->TrimStart('0'), "^([0-9]|[1][0-9]|[2-9][0-9]|[1][0-9][0-9]|2[0-4][0-9]|25[0-5])$")->Success)
 					{
 
 						int dec = Int32::Parse(this->txtInput->Text);
@@ -340,14 +340,15 @@ namespace NumberSystems {
 		{
 			try
 			{
-				int valid = Int32::Parse(this->txtInput->Text);
+				int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
+			
 				if (valid >= 0) {
 
-					if (Regex::Match(txtInput->Text, "^([0-9]|[1][0-9]|[2-9][0-9]|[1][0-9][0-9]|2[0-4][0-9]|25[0-5])$")->Success)
+					if (Regex::Match(txtInput->Text->TrimStart('0'), "^([0-9]|[1][0-9]|[2-9][0-9]|[1][0-9][0-9]|2[0-4][0-9]|25[0-5])$")->Success)
 					{
 					
 					
-						this->txtOutput->Text = this->txtInput->Text;
+						this->txtOutput->Text = this->txtInput->Text->TrimStart('0');
 
 					}
 					else
@@ -405,10 +406,10 @@ namespace NumberSystems {
 			try
 			{    
 				
-				int valid = Int32::Parse(this->txtInput->Text);
+				int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
 				if (valid >= 0) {
 
-					if (Regex::Match(txtInput->Text, "^[0-1]{1,8}$")->Success)
+					if (Regex::Match(txtInput->Text->TrimStart('0'), "^[0-1]{1,8}$")->Success)
 					{
 											
 							
@@ -470,6 +471,75 @@ namespace NumberSystems {
 
 		}
 
+//===========================================Binary to Hexidecimal==================================
+
+		if (this->cmbFrom->Text == "Bin" && this->cmbTo->Text == "Hex")
+		{
+			try
+			{
+
+				int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
+				if (valid >= 0) {
+
+					if (Regex::Match(txtInput->Text->TrimStart('0'), "^[0-1]{1,8}$")->Success)
+					{
+
+						this->txtOutput->Text = Convert::ToInt32(txtInput->Text, 2).ToString("X");
+
+
+					}
+					else
+					{
+
+						try
+						{
+							int dec = Convert::ToInt32(txtInput->Text, 2);
+							if (dec > 255)
+							{
+								this->txtOutput->Clear();
+								MessageBox::Show("A maximum binary number you can convert is up 8 bits!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
+							}
+							else
+							{
+								this->txtOutput->Clear();
+								MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+							}
+
+						}
+						catch (FormatException ^e)
+						{
+							this->txtOutput->Clear();
+							MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+						}
+
+
+					}
+
+
+				}
+				else
+				{
+					MessageBox::Show("Please enter positive binary number!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+				}
+			}
+			catch (FormatException ^ e)
+			{
+				this->txtOutput->Clear();
+				MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+			}
+			catch (OverflowException ^ o)
+			{
+				this->txtOutput->Clear();
+				MessageBox::Show("Binary Number Provided is too big \nTry again with a valid binary number not more 8bits!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+			}
+
+
+		}
 
 
 
