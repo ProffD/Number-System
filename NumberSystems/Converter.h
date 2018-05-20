@@ -540,10 +540,6 @@ namespace NumberSystems {
 
 
 		}
-
-
-
-
 	}
 
 };
