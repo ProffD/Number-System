@@ -320,6 +320,64 @@ namespace NumberSystems {
 
 		}
 
+		//===========================================Decimal to Decimal==================================
+
+		if (this->cmbFrom->Text == "Dec" && this->cmbTo->Text == "Dec")
+		{
+			try
+			{
+				int valid = Int32::Parse(this->txtInput->Text);
+				if (valid >= 0) {
+
+					if (Regex::Match(txtInput->Text, "^([0-9]|[1][0-9]|[2-9][0-9]|[1][0-9][0-9]|2[0-4][0-9]|25[0-5])$")->Success)
+					{
+					
+					
+						this->txtOutput->Text = this->txtInput->Text;
+
+					}
+					else
+					{
+
+						try
+						{
+							int dec = Int32::Parse(this->txtInput->Text);
+							if (dec > 255)
+							{
+								this->txtOutput->Clear();
+								MessageBox::Show("A maximum decimal number you can convert is 255!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
+							}
+
+						}
+						catch (FormatException ^e)
+						{
+							this->txtOutput->Clear();
+							MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+						}
+
+
+					}
+
+
+				}
+				else
+				{
+					MessageBox::Show("Please enter positive integers only!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+				}
+			}
+			catch (FormatException ^ e)
+			{
+				this->txtOutput->Clear();
+				MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+			}
+
+
+		}
+
+
 	
 
 	}
