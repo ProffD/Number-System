@@ -211,62 +211,73 @@ namespace NumberSystems {
 		
 		if (this->cmbFrom->Text == "Dec" && this->cmbTo->Text == "Bin")
 		{
-			try
+			if (this->txtInput->Text == "")
 			{
-				int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
-				if (valid >= 0) {
+				MessageBox::Show("Please specify an input to convert!", "No input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-					if (Regex::Match(txtInput->Text->TrimStart('0'), "^([0-9]|[1][0-9]|[2-9][0-9]|[1][0-9][0-9]|2[0-4][0-9]|25[0-5])$")->Success)
-					{
+			}
+			else
+			{
 
-						int dec = Int32::Parse(this->txtInput->Text);
-						String ^ binary = Convert::ToString(dec, 2);
-						this->txtOutput->Text = binary;
+				try
+				{
+					int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
+					if (valid >= 0) {
+
+						if (Regex::Match(txtInput->Text->TrimStart('0'), "^([0-9]|[1][0-9]|[2-9][0-9]|[1][0-9][0-9]|2[0-4][0-9]|25[0-5])$")->Success)
+						{
+
+							int dec = Int32::Parse(this->txtInput->Text);
+							String ^ binary = Convert::ToString(dec, 2);
+							this->txtOutput->Text = binary;
+
+						}
+						else
+						{
+
+							try
+							{
+								int dec = Int32::Parse(this->txtInput->Text);
+								if (dec > 255)
+								{
+									this->txtOutput->Clear();
+									MessageBox::Show("A maximum decimal number you can convert is 255!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
+								}
+
+							}
+							catch (FormatException ^e)
+							{
+								this->txtOutput->Clear();
+								MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+							}
+
+
+						}
+
 
 					}
 					else
 					{
-
-						try
-						{
-							int dec = Int32::Parse(this->txtInput->Text);
-							if (dec > 255)
-							{
-								this->txtOutput->Clear();
-								MessageBox::Show("A maximum decimal number you can convert is 255!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
-							}
-
-						}
-						catch (FormatException ^e)
-						{
-							this->txtOutput->Clear();
-							MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
-
-						}
-
+						MessageBox::Show("Please enter positive integers only!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 					}
-
-
 				}
-				else
+				catch (FormatException ^ e)
 				{
-					MessageBox::Show("Please enter positive integers only!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					this->txtOutput->Clear();
+					MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 				}
-			}
-			catch (FormatException ^ e)
-			{
-				this->txtOutput->Clear();
-				MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				catch (OverflowException ^ o)
+				{
+					this->txtOutput->Clear();
+					MessageBox::Show("Decimal Number Provided is too big \nTry again with a valid decimal number not more 255!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+				}
 
 			}
-			catch (OverflowException ^ o)
-			{
-				this->txtOutput->Clear();
-				MessageBox::Show("Decimal Number Provided is too big \nTry again with a valid decimal number not more 255!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
-
-			}
+			
 			
 	 }
 				
@@ -274,63 +285,70 @@ namespace NumberSystems {
 				
 		if (this->cmbFrom->Text == "Dec" && this->cmbTo->Text == "Hex")
 		{
-			try
+			if (this->txtInput->Text == "")
 			{
-				int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
-				if (valid >= 0) {
+				MessageBox::Show("Please specify an input to convert!", "No input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-					if (Regex::Match(txtInput->Text->TrimStart('0'), "^([0-9]|[1][0-9]|[2-9][0-9]|[1][0-9][0-9]|2[0-4][0-9]|25[0-5])$")->Success)
-					{
+			}
+			else
+			{
+				try
+				{
+					int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
+					if (valid >= 0) {
 
-						int dec = Int32::Parse(this->txtInput->Text);
-						String ^ hex = Convert::ToString(dec, 16);
-						this->txtOutput->Text = hex->ToUpper();
+						if (Regex::Match(txtInput->Text->TrimStart('0'), "^([0-9]|[1][0-9]|[2-9][0-9]|[1][0-9][0-9]|2[0-4][0-9]|25[0-5])$")->Success)
+						{
+
+							int dec = Int32::Parse(this->txtInput->Text);
+							String ^ hex = Convert::ToString(dec, 16);
+							this->txtOutput->Text = hex->ToUpper();
+
+						}
+						else
+						{
+
+							try
+							{
+								int dec = Int32::Parse(this->txtInput->Text);
+								if (dec > 255)
+								{
+									this->txtOutput->Clear();
+									MessageBox::Show("A maximum decimal number you can convert is 255!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
+								}
+
+							}
+							catch (FormatException ^e)
+							{
+								this->txtOutput->Clear();
+								MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+							}
+
+
+						}
+
 
 					}
 					else
 					{
-
-						try
-						{
-							int dec = Int32::Parse(this->txtInput->Text);
-							if (dec > 255)
-							{
-								this->txtOutput->Clear();
-								MessageBox::Show("A maximum decimal number you can convert is 255!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
-							}
-
-						}
-						catch (FormatException ^e)
-						{
-							this->txtOutput->Clear();
-							MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
-
-						}
-
+						MessageBox::Show("Please enter positive integers only!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 					}
-
-
 				}
-				else
+				catch (FormatException ^ e)
 				{
-					MessageBox::Show("Please enter positive integers only!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					this->txtOutput->Clear();
+					MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+				}
+				catch (OverflowException ^ o)
+				{
+					this->txtOutput->Clear();
+					MessageBox::Show("Decimal Number Provided is too big \nTry again with a valid decimal number not more 255!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 				}
 			}
-			catch (FormatException ^ e)
-			{
-				this->txtOutput->Clear();
-				MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
-
-			}
-			catch (OverflowException ^ o)
-			{
-				this->txtOutput->Clear();
-				MessageBox::Show("Decimal Number Provided is too big \nTry again with a valid decimal number not more 255!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
-
-			}
-
 
 		}
 
@@ -338,63 +356,70 @@ namespace NumberSystems {
 
 		if (this->cmbFrom->Text == "Dec" && this->cmbTo->Text == "Dec")
 		{
-			try
+			if (this->txtInput->Text == "")
 			{
-				int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
-			
-				if (valid >= 0) {
+				MessageBox::Show("Please specify an input to convert!", "No input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-					if (Regex::Match(txtInput->Text->TrimStart('0'), "^([0-9]|[1][0-9]|[2-9][0-9]|[1][0-9][0-9]|2[0-4][0-9]|25[0-5])$")->Success)
-					{
-					
-					
-						this->txtOutput->Text = this->txtInput->Text->TrimStart('0');
+			}
+			else
+			{
+				try
+				{
+					int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
+
+					if (valid >= 0) {
+
+						if (Regex::Match(txtInput->Text->TrimStart('0'), "^([0-9]|[1][0-9]|[2-9][0-9]|[1][0-9][0-9]|2[0-4][0-9]|25[0-5])$")->Success)
+						{
+
+
+							this->txtOutput->Text = this->txtInput->Text->TrimStart('0');
+
+						}
+						else
+						{
+
+							try
+							{
+								int dec = Int32::Parse(this->txtInput->Text);
+								if (dec > 255)
+								{
+									this->txtOutput->Clear();
+									MessageBox::Show("A maximum decimal number you can convert is 255!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
+								}
+
+							}
+							catch (FormatException ^e)
+							{
+								this->txtOutput->Clear();
+								MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+							}
+
+
+						}
+
 
 					}
 					else
 					{
-
-						try
-						{
-							int dec = Int32::Parse(this->txtInput->Text);
-							if (dec > 255)
-							{
-								this->txtOutput->Clear();
-								MessageBox::Show("A maximum decimal number you can convert is 255!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
-							}
-
-						}
-						catch (FormatException ^e)
-						{
-							this->txtOutput->Clear();
-							MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
-
-						}
-
+						MessageBox::Show("Please enter positive integers only!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 					}
-
-
 				}
-				else
+				catch (FormatException ^ e)
 				{
-					MessageBox::Show("Please enter positive integers only!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					this->txtOutput->Clear();
+					MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+				}
+				catch (OverflowException ^ o)
+				{
+					this->txtOutput->Clear();
+					MessageBox::Show("Decimal Number Provided is too big \nTry again with a valid decimal number not more 255!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 				}
 			}
-			catch (FormatException ^ e)
-			{
-				this->txtOutput->Clear();
-				MessageBox::Show("Decimal Number Provided is not an Integer!\nTry again with a valid Interger", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
-
-			}
-			catch (OverflowException ^ o)
-			{
-				this->txtOutput->Clear();
-				MessageBox::Show("Decimal Number Provided is too big \nTry again with a valid decimal number not more 255!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
-
-			}
-
 
 
 		}
@@ -403,69 +428,77 @@ namespace NumberSystems {
 
 		if (this->cmbFrom->Text == "Bin" && this->cmbTo->Text == "Dec")
 		{
-			try
-			{    
-				
-				int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
-				if (valid >= 0) {
+			if (this->txtInput->Text == "")
+			{
+				MessageBox::Show("Please specify an input to convert!", "No input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-					if (Regex::Match(txtInput->Text->TrimStart('0'), "^[0-1]{1,8}$")->Success)
-					{
-											
-							
-							
-							this->txtOutput->Text = Convert::ToInt32(txtInput->Text, 2).ToString();
-					     	
+			}
+			else
+			{
+				try
+				{
 
-					}
-					else
-					{
+					int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
+					if (valid >= 0) {
 
-						try
+						if (Regex::Match(txtInput->Text->TrimStart('0'), "^[0-1]{1,8}$")->Success)
 						{
-							int dec = Convert::ToInt32(txtInput->Text, 2);
-							if (dec > 255)
+
+
+
+							this->txtOutput->Text = Convert::ToInt32(txtInput->Text, 2).ToString();
+
+
+						}
+						else
+						{
+
+							try
 							{
-								this->txtOutput->Clear();
-								MessageBox::Show("A maximum binary number you can convert is up 8 bits!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
+								int dec = Convert::ToInt32(txtInput->Text, 2);
+								if (dec > 255)
+								{
+									this->txtOutput->Clear();
+									MessageBox::Show("A maximum binary number you can convert is up 8 bits!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
+								}
+								else
+								{
+									this->txtOutput->Clear();
+									MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+								}
+
 							}
-							else
+							catch (FormatException ^e)
 							{
 								this->txtOutput->Clear();
 								MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 							}
 
-						}
-						catch (FormatException ^e)
-						{
-							this->txtOutput->Clear();
-							MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 						}
 
 
 					}
+					else
+					{
+						MessageBox::Show("Please enter positive binary number!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-
+					}
 				}
-				else
+				catch (FormatException ^ e)
 				{
-					MessageBox::Show("Please enter positive binary number!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					this->txtOutput->Clear();
+					MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 				}
-			}
-			catch (FormatException ^ e )
-			{
-				this->txtOutput->Clear();
-				MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				catch (OverflowException ^ o)
+				{
+					this->txtOutput->Clear();
+					MessageBox::Show("Binary Number Provided is too big \nTry again with a valid binary number not more 8bits!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-			}
-			catch (OverflowException ^ o)
-			{
-				this->txtOutput->Clear();
-				MessageBox::Show("Binary Number Provided is too big \nTry again with a valid binary number not more 8bits!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
-
+				}
 			}
 
 
@@ -475,67 +508,75 @@ namespace NumberSystems {
 
 		if (this->cmbFrom->Text == "Bin" && this->cmbTo->Text == "Hex")
 		{
-			try
+			if (this->txtInput->Text == "")
 			{
+				MessageBox::Show("Please specify an input to convert!", "No input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-				int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
-				if (valid >= 0) {
+			}
+			else
+			{
+				try
+				{
 
-					if (Regex::Match(txtInput->Text->TrimStart('0'), "^[0-1]{1,8}$")->Success)
-					{
+					int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
+					if (valid >= 0) {
 
-						this->txtOutput->Text = Convert::ToInt32(txtInput->Text, 2).ToString("X");
-
-
-					}
-					else
-					{
-
-						try
+						if (Regex::Match(txtInput->Text->TrimStart('0'), "^[0-1]{1,8}$")->Success)
 						{
-							int dec = Convert::ToInt32(txtInput->Text, 2);
-							if (dec > 255)
+
+							this->txtOutput->Text = Convert::ToInt32(txtInput->Text, 2).ToString("X");
+
+
+						}
+						else
+						{
+
+							try
 							{
-								this->txtOutput->Clear();
-								MessageBox::Show("A maximum binary number you can convert is up 8 bits!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
+								int dec = Convert::ToInt32(txtInput->Text, 2);
+								if (dec > 255)
+								{
+									this->txtOutput->Clear();
+									MessageBox::Show("A maximum binary number you can convert is up 8 bits!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
+								}
+								else
+								{
+									this->txtOutput->Clear();
+									MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+								}
+
 							}
-							else
+							catch (FormatException ^e)
 							{
 								this->txtOutput->Clear();
 								MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 							}
 
-						}
-						catch (FormatException ^e)
-						{
-							this->txtOutput->Clear();
-							MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 						}
 
 
 					}
+					else
+					{
+						MessageBox::Show("Please enter positive binary number!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-
+					}
 				}
-				else
+				catch (FormatException ^ e)
 				{
-					MessageBox::Show("Please enter positive binary number!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					this->txtOutput->Clear();
+					MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 				}
-			}
-			catch (FormatException ^ e)
-			{
-				this->txtOutput->Clear();
-				MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				catch (OverflowException ^ o)
+				{
+					this->txtOutput->Clear();
+					MessageBox::Show("Binary Number Provided is too big \nTry again with a valid binary number not more 8bits!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-			}
-			catch (OverflowException ^ o)
-			{
-				this->txtOutput->Clear();
-				MessageBox::Show("Binary Number Provided is too big \nTry again with a valid binary number not more 8bits!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
-
+				}
 			}
 
 
@@ -545,67 +586,75 @@ namespace NumberSystems {
 
 		if (this->cmbFrom->Text == "Bin" && this->cmbTo->Text == "Bin")
 		{
-			try
+			if (this->txtInput->Text == "")
 			{
+				MessageBox::Show("Please specify an input to convert!", "No input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-				int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
-				if (valid >= 0) {
+			}
+			else
+			{
+				try
+				{
 
-					if (Regex::Match(txtInput->Text->TrimStart('0'), "^[0-1]{1,8}$")->Success)
-					{
+					int valid = Int32::Parse(this->txtInput->Text->TrimStart('0'));
+					if (valid >= 0) {
 
-						this->txtOutput->Text = this->txtInput->Text->TrimStart('0');
-
-
-					}
-					else
-					{
-
-						try
+						if (Regex::Match(txtInput->Text->TrimStart('0'), "^[0-1]{1,8}$")->Success)
 						{
-							int dec = Convert::ToInt32(txtInput->Text, 2);
-							if (dec > 255)
+
+							this->txtOutput->Text = this->txtInput->Text->TrimStart('0');
+
+
+						}
+						else
+						{
+
+							try
 							{
-								this->txtOutput->Clear();
-								MessageBox::Show("A maximum binary number you can convert is up 8 bits!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
+								int dec = Convert::ToInt32(txtInput->Text, 2);
+								if (dec > 255)
+								{
+									this->txtOutput->Clear();
+									MessageBox::Show("A maximum binary number you can convert is up 8 bits!", "Overflow", MessageBoxButtons::OK, MessageBoxIcon::Error);
+								}
+								else
+								{
+									this->txtOutput->Clear();
+									MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+								}
+
 							}
-							else
+							catch (FormatException ^e)
 							{
 								this->txtOutput->Clear();
 								MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 							}
 
-						}
-						catch (FormatException ^e)
-						{
-							this->txtOutput->Clear();
-							MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 						}
 
 
 					}
+					else
+					{
+						MessageBox::Show("Please enter positive binary number!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-
+					}
 				}
-				else
+				catch (FormatException ^ e)
 				{
-					MessageBox::Show("Please enter positive binary number!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					this->txtOutput->Clear();
+					MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 				}
-			}
-			catch (FormatException ^ e)
-			{
-				this->txtOutput->Clear();
-				MessageBox::Show("Binary Number Provided is not valid!\nTry again with a valid binary number", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				catch (OverflowException ^ o)
+				{
+					this->txtOutput->Clear();
+					MessageBox::Show("Binary Number Provided is too big \nTry again with a valid binary number not more 8bits!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-			}
-			catch (OverflowException ^ o)
-			{
-				this->txtOutput->Clear();
-				MessageBox::Show("Binary Number Provided is too big \nTry again with a valid binary number not more 8bits!", "Invalid Input", MessageBoxButtons::OK, MessageBoxIcon::Error);
-
+				}
 			}
 
 
